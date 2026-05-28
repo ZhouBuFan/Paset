@@ -288,6 +288,8 @@ class PasetWindow(QWidget):
             self.show_and_activate()
     
     def show_and_activate(self):
+        if not self.isVisible():
+            self.setVisible(True)
         self.show()
         self.raise_()
         self.activateWindow()
