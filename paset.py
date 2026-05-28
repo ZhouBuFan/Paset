@@ -12,7 +12,7 @@ from PyQt6.QtWidgets import (
     QListWidgetItem, QLabel, QSystemTrayIcon, QMenu,
     QFrame, QSizePolicy
 )
-from PyQt6.QtCore import Qt, QTimer, QSize
+from PyQt6.QtCore import Qt, QTimer, QSize, QEvent
 from PyQt6.QtGui import QIcon, QFont, QAction, QColor, QPixmap
 
 from qfluentwidgets import (
@@ -477,6 +477,22 @@ class PasetWindow(QWidget):
     def quit_app(self):
         QApplication.quit()
     
+    def changeEvent(self, event):
+        """处理窗口状态变化，用于检测程序坞点击"""
+        if event.type() == QEvent.Type.WindowStateChange:
+            if self.windowState() == Qt.WindowState.WindowNoState and self.isHidden():
+                # 窗口从最小化恢复或从dock点击激活
+                self.show_and_activate()
+        super().changeEvent(event)
+
+    def event(self, event):
+        """处理应用激活事件"""
+        if event.type() == QEvent.Type.ApplicationActivate:
+            # macOS 程序坞点击或应用切换时会触发
+            if self.isHidden():
+                self.show_and_activate()
+        return super().event(event)
+
     def closeEvent(self, event):
         event.ignore()
         self.hide()
