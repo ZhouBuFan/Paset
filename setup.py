@@ -5,12 +5,12 @@ py2app setup script for Paset
 from setuptools import setup
 
 APP = ['paset.py']
-DATA_FILES = []
+DATA_FILES = ['paset.png']
 OPTIONS = {
     'argv_emulation': False,
-    'packages': ['PyQt6', 'AppKit'],
-    'includes': ['PyQt6.QtCore', 'PyQt6.QtGui', 'PyQt6.QtWidgets'],
-    'excludes': ['tkinter', 'matplotlib', 'numpy', 'pandas'],
+    'packages': ['PyQt6', 'qfluentwidgets', 'AppKit'],
+    'includes': ['PyQt6.QtCore', 'PyQt6.QtGui', 'PyQt6.QtWidgets', 'qfluentwidgets'],
+    'excludes': ['tkinter', 'matplotlib', 'numpy', 'pandas', 'PyQt5'],
     'iconfile': 'assets/icon.icns',
     'plist': {
         'CFBundleName': 'Paset',
